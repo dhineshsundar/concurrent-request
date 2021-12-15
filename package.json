@@ -1,0 +1,20 @@
+{
+  "name": "sequence",
+  "version": "0.0.1",
+  "description": "Application Description",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "async": "latest",
+    "axios": "^0.24.0",
+    "bluebird": "^3.7.2",
+    "express": "^4.17.1",
+    "parallel-http-request": "^1.1.3",
+    "request": "latest",
+    "sequence": "^3.0.0"
+  },
+  "author": "dhinesh",
+  "license": "ISC"
+}
