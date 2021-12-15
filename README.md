@@ -12,3 +12,4 @@ node cluster.js
  * Step 4: Invoke client request from browser
 http://localhost:3000
 
+![image](https://user-images.githubusercontent.com/2387801/146252284-4daff840-5ed4-4c71-ae79-fa1c5b577ad3.png)
