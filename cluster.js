@@ -9,9 +9,41 @@ const numCPUs = require('os').cpus().length;
 const app = express();
 const port = 3000;
 
-var multipleInvocation = ['http://localhost:8081/delayedResponse?delay=10',
-'http://localhost:8081/delayedResponse?delay=12',
-'http://localhost:8081/delayedResponse?delay=15'
+var multipleInvocation = ['https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=19',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=19',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=19',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=5',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15',
+  'https://reqres.in/api/users?delay=19',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=10',
+  'https://reqres.in/api/users?delay=15'
+
+//  'http://localhost:8081/delayedResponse?delay=15'
 ]; // 1000+ urls here
 
 
@@ -43,15 +75,6 @@ else{
 }
 
 
-/**
- * 
- */
- app.get('/test', (req, res) => {
-  
-  res.end(fetchNames().toString());
-});
-
-
 const fetchNames = async () => {
   try {
     const res = await Promise.all([
@@ -78,22 +101,29 @@ app.get('/delayedResponse', (req, res) => {
 });
 
 /**
- * 
+ *   
  */ 
  app.get('/',   (req, res) => {
+      var startTime = new Date().getTime();
+      var endTime;
+      var timeTaken;
      async.map(multipleInvocation, function(url, callback) {
         request(url, function(error, response, html) {
           console.log(console.log('Response Received: ' +new Date(new Date().getTime()) + response.body));
-          //console.log(response.statusCode);
           callback(error, html);
         });
       }, function(err, results) {
-          //console.log('Final Results: ' + results);
-          if(err)
-              console.log(err);
-          res.end(new Date(new Date().getTime()) + " :: "+results.toString());
+        var response;
+          if(err){
+            console.log(err);
+            response=err
+          }else{
+            response = results;
+          }
+          endTime = new Date().getTime();
+          timeTaken =  (endTime - startTime)/1000;
+          res.end(new Date(new Date().getTime()) + " Time take to process the requests are:: " + timeTaken + " Seconds " + " :: "+response.toString());
       });
-
 });
 
 
